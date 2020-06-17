@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 text-center">
+      <div type="text" class="mt-4 mb-4" style="font-size: 4rem;">
+        {{ currentMonth }}
+      </div>
+    </div>
+  </div>
+  <div class="row no-gutters mt-8">
+    <div class="col-1 text-center">
+      <button
+        *ngIf="monthId > 0"
+        type="button"
+        class="btn btn-primary btn-block"
+        style="position: relative;"
+        (click)="changePage('backward')"
+      >
+        Previous
+      </button>
+    </div>
+    <div class="col-10">
+      <app-calendar-meetings-month></app-calendar-meetings-month>
+    </div>
+    <div class="col-1 text-center">
+      <button
+        *ngIf="monthId < 11"
+        type="button"
+        class="btn btn-primary btn-block"
+        style="position: relative;"
+        (click)="changePage('forward')"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,138 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>Date: {{ selectedDate }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="meetingForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="meetingRoom">Meeting Room</label>
+              <input
+                type="text"
+                id="meetingRoom"
+                formControlName="meetingRoom"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="startHour">Start Time</label>
+              <input
+                min="0"
+                max="23"
+                type="time"
+                id="startHour"
+                (input)="checkTime()"
+                formControlName="startHour"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="endHour">End Time</label>
+              <input
+                min="0"
+                max="23"
+                type="time"
+                id="endHour"
+                (input)="checkTime()"
+                formControlName="endHour"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          Participants:
+        </div>
+        <div class="row">
+          <div class="col-12" formArrayName="participants">
+            <div class="row" style="margin-top: 10px;">
+              <div
+                *ngFor="
+                  let participantCtrl of meetingForm.get('participants')[
+                    'controls'
+                  ];
+                  let i = index
+                "
+                [formGroupName]="i"
+                class="col-6 mt-1"
+              >
+                <div class="row mt-10 text-left">
+                  <div class="col-9">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="name"
+                    />
+                  </div>
+                  <div class="col-2">
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      (click)="onDeleteparticipant(i)"
+                    >
+                      X
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 text-danger" *ngIf="errorTime">
+              <h1>{{ errorTime }}</h1>
+            </div>
+            <hr />
+            <div class="row text-center">
+              <div class="col-12">
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  (click)="onAddparticipant()"
+                >
+                  Add participant
+                </button>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-12 mt-1">
+                <button
+                  type="submit"
+                  class="btn btn-success"
+                  [disabled]="!meetingForm.valid || errorTime"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-12 mt-1">
+                <button type="button" class="btn btn-danger" (click)="close()">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

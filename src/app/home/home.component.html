@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="row">
+    <div
+      class="col-md-4 col-xs-12 monthRow"
+      *ngFor="let month of months; let i = index"
+    >
+      <h1 [routerLink]="['../month', i]">{{ month }}</h1>
+      <app-calendar-meetings-month [month]="i"></app-calendar-meetings-month>
+    </div>
+  </div>
+</div>

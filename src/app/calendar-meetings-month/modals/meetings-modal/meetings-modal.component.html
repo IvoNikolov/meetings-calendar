@@ -1,0 +1,34 @@
+<div class="contaner">
+  <div *ngFor="let meeting of currentMeetings; let i = index">
+    <div class="row mt-2">
+      <div class="col-9">
+        <div class="row">
+          <div class="col">
+            {{ meeting?.name }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ meeting?.startMil | date: "HH:mm" }} -
+            {{ meeting?.endMil | date: "HH:mm" }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">Room: {{ meeting?.meeetingRoom }}</div>
+        </div>
+      </div>
+      <div class="col-3">
+        <button class="btn btn-danger" (click)="deleteMeeting(meeting?.id)">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div class="col-12 mt-1">
+      <button type="button" class="btn btn-danger" (click)="close()">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

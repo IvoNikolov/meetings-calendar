@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  <div class="mb-3">
+    <div class="row" *ngFor="let week of weeks; let i = index">
+      <div class="col text-center" *ngFor="let day of columns; let j = index">
+        <div class="row" *ngIf="i * 7 + (j + 1) - firstDate <= currentMonth">
+          <div
+            class="col-12 text-left"
+            [style]="paramIndex ? 'height: 20rem' : 'height: 7rem;'"
+          >
+            <div *ngIf="i * 7 + (j + 1) - firstDate > 0">
+              {{ i * 7 + (j + 1) - firstDate }}
+            </div>
+
+            <div
+              *ngFor="let meeting of getData(i * 7 + (j + 1) - firstDate);let z = index"
+            >
+              <div class="row" *ngIf="z < 3">
+                <div class="col-12 mb-1 mt-1">
+                  <button
+                    [disabled]="!isMonthHref"
+                    [class]="meeting.meeetingRoom === 'Arbanasi' ? 'btn btn-success' : 'btn btn-warning'"
+                    class="btn"
+                    data-toggle="modal"
+                    data-target="#myModal"
+                    (click)="open(i, j, 'show')"
+                  >
+                    <div *ngIf="paramIndex">
+                      {{ meeting.name }}
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <button
+              [disabled]="!isMonthHref"
+              *ngIf="(i * 7 + (j + 1) - firstDate) > 0 &&
+                (i * 7 + (j + 1) - firstDate <= currentMonth) &&
+                paramIndex
+              "
+              class="btn"
+              data-toggle="modal"
+              data-target="#myModal"
+              (click)="open(i, j, 'add')"
+            >
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal" [ngClass]="{ show: showModal }">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <app-add-meeting-modal
+          *ngIf="currentModal === 'add'"
+          [data]="selectedDay"
+          (closeWindow)="close()"
+        ></app-add-meeting-modal>
+        <app-meetings-modal
+          *ngIf="currentModal === 'show'"
+          [data]="selectedDay"
+          (closeWindow)="close()"
+        ></app-meetings-modal>
+      </div>
+    </div>
+  </div>
+</div>
